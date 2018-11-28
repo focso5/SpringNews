@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="resource.NewsMapper">
+
+	<!-- insert (삽입, 추가) -->
+	<insert id="insertNews" parameterType="model.vo.NewsVO">
+		<selectKey resultType="_int" keyProperty="id" order="BEFORE">
+			select news_seq.nextval from dual
+		</selectKey>
+		INSERT into news values(#{id}, #{writer}, #{title}, #{content}, sysdate, 0)
+	</insert>
+
+	<!-- update (수정) -->
+	<update id="updateNews" parameterType="model.vo.NewsVO">
+		UPDATE news set title = #{title}, content = #{content} where id = #{id}
+	</update>
+	<update id="updateCount">
+		UPDATE news SET cnt = cnt+1 WHERE id = #{id}
+	</update>
+
+	<!-- delete (삭제) -->
+	<delete id="deleteNews" parameterType="_int">
+		DELETE FROM News WHERE id = #{id}
+	</delete>
+
+	<select id="selectNewsOne" parameterType="_int"
+		resultType="model.vo.NewsVO">
+		SELECT title, writer, content from news where id = #{id}
+	</select>
+
+
+
+	<!-- 리스트 출력 -->
+	<select id="selectPage" parameterType="hashmap" resultType="model.vo.NewsVO">
+		SELECT id, writer, title, writedate, cnt, rnum FROM
+		(SELECT id, writer, title, writedate, cnt, rownum rnum from
+		(SELECT id, writer, title, to_char(writedate, 'YYYY"년" MM"월" DD"일"') as writedate, cnt FROM news
+			WHERE to_char(writedate,'YYYY.MM') = #{date}
+			<if test="writer != null and !writer.equals('')"> and writer = #{writer}</if>
+			<if test="searchType == 'content'"> and content like '%'||#{key}||'%'</if>
+			<if test="searchType == 'title'">and title like '%'||#{key}||'%'</if>
+		ORDER BY writedate DESC ))
+		where rnum between #{start} and #{end}
+	</select>
+	
+	<!-- 총 게시물 개수 -->
+	<select id="cnt" resultType="_int" parameterType="hashmap">
+		SELECT count(*) FROM news
+		WHERE to_char(writedate,'YYYY.MM') = #{date}
+		<if test="writer != null and !writer.equals('')"> and writer = #{writer}</if>
+		<if test="searchType == 'content'"> and content like '%'||#{key}||'%'</if>
+		<if test="searchType == 'title'">and title like '%'||#{key}||'%'</if>
+	</select>
+	
+	
+	<!-- 회원가입 insert -->
+	<insert id="insertLogin" parameterType="model.vo.LoginVO">
+		INSERT into member values(#{name}, #{email}, #{password} )
+	</insert>
+	
+
+	<select id="selectLogin" parameterType="String" resultType="_int">
+		SELECT COUNT(*) FROM member where email = #{email}
+		<if test="password != null">and password = #{password}</if>
+	</select>
+	
+</mapper>
+
