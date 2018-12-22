@@ -25,9 +25,9 @@ public class LoginController {
 	public ModelAndView login(LoginVO vo, HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();   
 		System.out.println(vo);
-		if(vo.getName()!=null && vo.getPassword()!=null) {
+		if(vo.getEmail()!=null && vo.getPassword()!=null) {
 			/*관리자 로그인*/
-			if(vo.getName().equals("spring") && vo.getPassword().equals("1234")) {
+			if(vo.getEmail().equals("spring") && vo.getPassword().equals("1234")) {
 				HttpSession session = request.getSession();	
 				session.setAttribute("user", "admin");
 			}

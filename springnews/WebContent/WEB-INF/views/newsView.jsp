@@ -22,7 +22,7 @@ intpu {
 
 .focus-input100 {
 	display: block;
-	padding-top: 5px;
+	/* padding-top: 5px; */
 	color: #0c9e7d;
 	font-size: 15px;
 }
@@ -63,6 +63,12 @@ intpu {
 	background-size:100% 100%;
 	z-index: 1002;
 	overflow: auto;
+}
+
+.container-login100-form-btn{
+	float: left;
+    margin: 500ps;
+    clear: both;
 }
 </style>
 
@@ -225,7 +231,7 @@ intpu {
 
 									<!-- id -->
 									<div class="wrap-input100 rs1-wrap-input100 validate-input m-b-20" data-validate="Type user name">
-										<input class="input100" type="text" name="name" placeholder="User name" required> 
+										<input class="input100" type="text" name="email" placeholder="User name" required> 
 										<span class="focus-input100"></span>
 									</div>
 
@@ -250,28 +256,33 @@ intpu {
 									<div class="wrap-input100 rs2-wrap-input100 validate-input m-b-20" data-validate="Type password">
 										<input class="input100" type="text" name="name" placeholder="Last Name *" required style="width: 550px;">
 									</div>
+									
+									<!-- password -->
+									<div class="wrap-input100 rs2-wrap-input100 validate-input m-b-20" data-validate="Type password">
+										<input class="input100" type="password" name="password" placeholder="Set A Password *" id="pass" required> 
+									</div>
 
 
 								<!-- 이메일 -->
-									<div class="wrap-input100 rs3-wrap-input100 validate-input m-b-20" data-validate="Type password" style="margin-bottom: 40px;">
+									<div class="wrap-input100 rs3-wrap-input100 validate-input m-b-20" data-validate="Type password" style="margin-bottom: 40px; float: left; width: 470px;">
 										<input class="input100" type="text" name="email" placeholder="Email Address *" id="email" required style="width: 265px; float: left;">
 										<span style="margin-left: 15px; margin-right: 15px; padding-top: 5px; float: left;"> @ </span> 
 										
-										<select id="email_2"name="email" style="height: 40px; width: 110px; text-align: center; border: 1px solid #d8d6d6; float: left; margin-right: 20px;">
+										<select id="email_2"name="email" style="height: 40px; width: 130px; text-align: center; border: 1px solid #d8d6d6; float: left; margin-right: 20px;">
 											<option value="naver.com">naver.com</option>
 											<option value="daum.net">daum.net</option>
 											<option value="gmail.com">gmail.com</option>
 											<option value="nate.com">nate.com</option>
 										</select>	
-											<button type="submit" id="checkbtn" class="focus-input100" onclick="return false">중복확인</button>
 									</div>
+									<button type="submit" id="checkbtn" class="focus-input100" onclick="return false">중복확인</button>
 								
 								<script>
 									$(document).ready(function() {
 										$('#checkbtn').on('click',function() {
 											$.ajax({ type : 'POST', url : '/springnews/checkSignup.do', 
 												data : { "email" : $('#email').val()+ '@'+ $('#email_2').val()}, 
-												success : function(data) {alert(data);
+												success : function(data) {/* alert(data); */
 													if (data == true) {
 														$('#checkMsg').html('<p style="color:red">사용불가능</p>');
 															$('#email').val(" ")
@@ -285,10 +296,7 @@ intpu {
 								</script>
 
 
-								<!-- password -->
-									<div class="wrap-input100 rs2-wrap-input100 validate-input m-b-20" data-validate="Type password">
-										<input class="input100" type="password" name="password" placeholder="Set A Password *" id="pass" required> 
-									</div>
+								
 
 									<div class="container-login100-form-btn">
 										<button class="login100-form-btn" id="loginc" type="submit" onclick="document.getElementById('light').style.display='block';document.getElementById('fade').style.display='block'">
@@ -351,7 +359,7 @@ intpu {
 								<input type="hidden" name="date" value="${today }"><br>
 								<div style="width: 400px; height: 50px; margin: 0 auto; margin-top: 50px">
 									<div style="width: 100px; height: 20px; float: left;">
-										<select name="searchType" style="height: 23px; width: 62px; margin-top: 35px; text-align: center; border: 1px solid #d8d6d6;">
+										<select name="searchType" style="height: 33px; width: 75px; margin-top: 30px; text-align: center; border: 1px solid #d8d6d6;">
 											<option value="title">제목</option>
 											<option value="content">내용</option>
 										</select>

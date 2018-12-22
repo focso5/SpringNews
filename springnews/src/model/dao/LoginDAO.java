@@ -51,7 +51,7 @@ public class LoginDAO {
 		HashMap map = new HashMap();
 		try {
 			String statement = "resource.NewsMapper.selectLogin";
-			map.put("name", vo.getName());
+			map.put("email", vo.getEmail());
 			map.put("password", vo.getPassword());
 			int ret = session.selectOne(statement, map);
 			

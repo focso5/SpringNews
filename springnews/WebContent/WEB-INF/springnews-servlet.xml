@@ -25,12 +25,11 @@
 	         class="org.springframework.web.multipart.commons.CommonsMultipartResolver" />
 	
 <!-- DB연동 -->
-	<bean id="dataSource"
-		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="oracle.jdbc.OracleDriver" />
 		<property name="url" value="jdbc:oracle:thin:@localhost:1521:XE" />
-		<property name="username" value="jdbctest" />
-		<property name="password" value="jdbctest" />
+		<property name="username" value="news" />
+		<property name="password" value="news" />
 	</bean>
 
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">

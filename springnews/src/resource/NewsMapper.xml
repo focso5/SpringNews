@@ -57,10 +57,11 @@
 	
 	<!-- 회원가입 insert -->
 	<insert id="insertLogin" parameterType="model.vo.LoginVO">
-		INSERT into member values(#{name}, #{email}, #{password} )
+		INSERT into member values(#{name}, #{password}, #{email} )
 	</insert>
 	
 
+<!-- 로그인 -->
 	<select id="selectLogin" parameterType="String" resultType="_int">
 		SELECT COUNT(*) FROM member where email = #{email}
 		<if test="password != null">and password = #{password}</if>
