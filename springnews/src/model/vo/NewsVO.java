@@ -4,6 +4,7 @@ public class NewsVO {
 	private int id;
 	private String writer;
 	private String title;
+//	private String img;
 	private String content;
 	private String writedate;
 	private int cnt;

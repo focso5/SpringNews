@@ -119,5 +119,17 @@
 			<artifactId>log4j-core</artifactId>
 			<version>2.11.1</version>
 		</dependency>
+		
+		<!-- Rserve -->
+		<dependency>
+			<groupId>com.github.lucarosellini.rJava</groupId>
+			<artifactId>JRIEngine</artifactId>
+			<version>0.9-7</version>
+		</dependency>
+		<dependency>
+			<groupId>net.rforge</groupId>
+			<artifactId>Rserve</artifactId>
+			<version>0.6-8.1</version>
+		</dependency>
 	</dependencies>
 </project>
