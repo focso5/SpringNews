@@ -109,7 +109,7 @@ intpu {
 
 				<!-- 게시물 -->
 				<div class="content">
-					<div id="newsBox">
+					<div id="newsBox" style="width: 1100px">
 						<c:if test="${!empty list}">
 							<table>
 								<tr>
