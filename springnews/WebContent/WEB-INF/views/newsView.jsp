@@ -339,8 +339,8 @@ intpu {
 							<form method="post" action="/springnews/update.do">
 								<input type="hidden" name="action" value="update"><br>
 								<input type="hidden" name="id" value="${param.id}"><br>
-								<input type="text" name="title" style="text-shadow: 0 0 black; width: 340px; margin-top: 80px; display: block; clear: both;" value="${vo.title}"><br>
-								<input type="text" name="writer" style="text-shadow: 0 0 black; width: 340px; margin-top: 10px;" value="${vo.writer}"><br>
+								<input type="text" name="title" style="text-shadow: 0 0 black; width: 500px; margin-top: 80px; display: block; clear: both;" value="${vo.title}"><br>
+								<input type="text" name="writer" style="text-shadow: 0 0 black; width: 500px; margin-top: 10px;" value="${vo.writer}"><br>
 								<textarea rows=10 cols=50 name="content" style="text-shadow: 0 0 black; margin-top: 10px;">${vo.content}</textarea>
 								<br>
 								<button class="btn-1" style="border: 1px solid #ccc; margin-right: 10px;">확인</button>
