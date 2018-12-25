@@ -1,16 +1,39 @@
-#ë¸Œë¼ìš°ì €ë¥¼ ì œì–´í•˜ê¸° ìœ„í•œ íŒ¨í‚¤ì§€
+#java -jar selenium-server-standalone.jar -port 4445
+
+
+#ºê¶ó¿ìÀú¸¦ Á¦¾îÇÏ±â À§ÇÑ ÆĞÅ°Áö
 #install.packages("RSelenium")
 library(RSelenium)
 
-#ì‚¬ì´íŠ¸ ì ‘ì†
+#»çÀÌÆ® Á¢¼Ó
 remDr <- remoteDriver(remoteServerAddr ="localhost", port = 4445, browserName = "chrome")
 remDr$open()
 site <- paste("http://imnews.imbc.com/replay/2018/nw1700/article/5085287_23836.html?menuid=society")
 remDr$navigate(site)
 webElem <- remDr$findElement("css","body")
 
-#SQLì—°ë™
+
+###########Java¿¬µ¿
+
+#C:\Program Files\R\R-3.5.1\bin\x64
+#Rserve --RS-encoding utf8
+
+
+#install.packages("rJava")
+#install.packages("memoise")
+#install.packages("KoNLP")
+
+#install.packages("wordcloud")
+#install.packages("wordcloud2")
+
+#install.packages("Rserve")
+library(Rserve)
+
+
+#SQL¿¬µ¿
+#install.packages("DBI")
 library(DBI)
+#install.packages("RJDBC")
 library(RJDBC)
 
 drv <- JDBC("oracle.jdbc.driver.OracleDriver","C:/ojdbc6.jar")
@@ -20,38 +43,38 @@ conn <- dbConnect(drv, "jdbc:oracle:thin:@localhost:1521:xe", "news","news")
 
 i <- 1
 for(i in 1:6){
-  #ë‰´ìŠ¤ ì œëª©
+  #´º½º Á¦¸ñ
   tcs <- paste("#news_content_",i," > div > section > section.header > h1", sep="")
   Tnodes <- remDr$findElement(using = 'css', tcs)
   title <- Tnodes$getElementText()
   title <- gsub(title, pattern=c("'"), replacement = '"')
   
-  #ë‚´ìš©
+  #³»¿ë
   ccs <- paste("#news_content_",i," > div > section > section.body > section", sep="")
   Cnodes <- remDr$findElement(using = 'css', ccs)
   content <- Cnodes$getElementText()
   content <- gsub(content, pattern=c("'"), replacement = '"')
   
   
-  #ê¸€ì“´ì´
+  #±Û¾´ÀÌ
   wcs <- paste("#news_content_",i," > div > section > section.header > section > span:nth-child(1)", sep="")
   Wnodes <- remDr$findElement(using = 'css', wcs)
   writer <- Wnodes$getElementText()
   
-  #ë‚ ì§œ
+  #³¯Â¥
   dcs <- paste("#news_content_",i," > div > section > section.header > section > span:nth-child(2)", sep="")
   Dnodes <- remDr$findElement(using = 'css', dcs)
   date <- Dnodes$getElementText()
   
-  #dateê°’ì„ ê³µë°± ê¸°ì¤€ìœ¼ë¡œ ë¶„ë¦¬ 
+  #date°ªÀ» °ø¹é ±âÁØÀ¸·Î ºĞ¸® 
   day <- strsplit(date[[1]], " ")[[1]][2]
   
   
-  #ë‚´ìš© ì‚½ì…
+  #³»¿ë »ğÀÔ
   dbSendUpdate(conn, paste("INSERT INTO news VALUES
                              (NEWS_SEQ.nextval, '",writer,"', '",title,"', '",content,"', '",day,"', 0)",sep=""))
   
-  #ìŠ¤í¬ë¡¤ë‚´ë¦¬ê¸°
+  #½ºÅ©·Ñ³»¸®±â
   remDr$executeScript("scrollBy(0,2000)",args = list(webElem))
   Sys.sleep(1)
 }
